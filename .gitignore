@@ -1,0 +1,16 @@
+# Ignorar a pasta do ambiente virtual
+venv/
+
+# Ignorar arquivos de variáveis de ambiente sensíveis
+.env
+
+# Ignorar arquivos de cache do Python
+__pycache__/
+
+# Ignorar arquivos específicos do sistema operacional
+.DS_Store  # MacOS
+Thumbs.db  # Windows
+
+# Ignorar arquivos de logs e temporários
+*.log
+*.pyc
