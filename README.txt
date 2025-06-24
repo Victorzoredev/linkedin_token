@@ -1,222 +1,134 @@
-# LinkedIn Token Retriever / Recuperador de Token do LinkedIn
+# LinkedIn Token Retriever 🔐
 
-## English Version
+*Autenticação OAuth 2.0 via LinkedIn com exibição de tokens e IDs úteis para automações.*
 
-This project is a Flask application that allows users to authenticate via LinkedIn, retrieve an access token, refresh token (if available), expiration time, person ID, and organization ID.
-
-### Features
-
-- LinkedIn OAuth 2.0 authentication
-- Retrieval of Access Token and Refresh Token
-- Token expiration time tracking
-- Retrieval of Person ID (personal profile ID)
-- Retrieval of Organization ID (company page ID)
-- Simple web interface to display the data
+![MIT License](https://img.shields.io/github/license/seuusuario/linkedin_token)
 
 ---
 
-### Prerequisites
+## 📑 Índice
 
-Before running the project, ensure you have the following set up:
-
-1. **Create a LinkedIn Developer App:**
-   - Go to [LinkedIn Developer](https://www.linkedin.com/developers/apps)
-   - Create a new app and fill in the required details.
-   - Add the following products to your app:
-     - "Sign In with LinkedIn"
-     - "Marketing Developer Platform"
-   - Copy the `Client ID` and `Client Secret`.
-   - Set the redirect URL to: `http://127.0.0.1:5000/callback`
-
-2. **Set the required scopes:**
-   - Ensure the following permissions are selected:
-     - `openid profile email`
-     - `r_basicprofile`
-     - `r_organization_admin`
-     - `r_organization_social`
-     - `rw_organization_admin`
-     - `w_organization_social`
-     - `w_member_social`
-
-3. **Create and configure the `.env` file**
-
-Create a `.env` file in the root directory with the following content:
-
-```
-LINKEDIN_CLIENT_ID=YOUR_CLIENT_ID
-LINKEDIN_CLIENT_SECRET=YOUR_CLIENT_SECRET
-LINKEDIN_REDIRECT_URI=http://127.0.0.1:5000/callback
-```
-
-4. **Create and activate a virtual environment (venv)**
-
-```bash
-python3 -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate    # Windows
-```
+1. [Visão Geral](#visão-geral)
+2. [Funcionalidades](#funcionalidades)
+3. [Pré-requisitos](#pré-requisitos)
+4. [Configuração do Ambiente](#configuração-do-ambiente)
+5. [Execução](#execução)
+6. [Estrutura do Projeto](#estrutura-do-projeto)
+7. [Personalização](#personalização)
+8. [Licença](#licença)
 
 ---
 
-### Installation and Execution
+## Visão Geral
 
-1. Clone the repository:
+Este projeto é uma aplicação **Flask** simples para autenticar via **LinkedIn OAuth 2.0** e capturar os seguintes dados:
 
-```bash
-git clone https://github.com/yourusername/linkedin_token.git
-cd linkedin_token
-```
+* Access Token
+* Refresh Token (se aplicável)
+* Tempo de expiração do token
+* Person ID (ID do perfil pessoal)
+* Organization ID (ID da página empresarial)
 
-2. Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Run the Flask application:
-
-```bash
-python app.py
-```
-
-4. Open in your browser:
-
-```plaintext
-http://127.0.0.1:5000
-```
+Ideal para desenvolvedores que precisam testar ou configurar integrações com a API do LinkedIn.
 
 ---
 
-### Project Structure
+## Funcionalidades
 
-```
-linkedin_token/
-│-- app.py               # Main Flask application
-│-- config.py            # Configuration settings
-│-- templates/
-│   ├── home.html         # Authentication page
-│   ├── dashboard.html    # Data display page
-│-- .env                  # Environment variables
-│-- requirements.txt      # Project dependencies
-```
+* Autenticação com LinkedIn OAuth 2.0
+* Visualização dos dados autenticados em interface web
+* Suporte a múltiplos escopos (perfil, páginas, social sharing)
 
 ---
 
-### Customization
-
-- You can edit the HTML templates in the `templates/` directory to customize the appearance.
-- To modify the requested scopes, update the authentication URL in `app.py`.
-
----
-
-### License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## Versão em Português
-
-Este projeto é uma aplicação Flask que permite autenticar usuários via LinkedIn, obter um token de acesso, um token de atualização (se disponível), tempo de expiração, ID da pessoa e ID da organização associada.
-
-### Funcionalidades
-
-- Autenticação via LinkedIn OAuth 2.0
-- Obtenção do Access Token e Refresh Token
-- Rastreamento do tempo de expiração do token
-- Obtenção do Person ID (ID do perfil pessoal)
-- Obtenção do Organization ID (ID da página da empresa)
-- Interface web simples para visualizar os dados
-
----
-
-### Pré-requisitos
-
-Antes de rodar o projeto, certifique-se de que possui os seguintes itens configurados:
+## Pré-requisitos
 
 1. **Criar um aplicativo no LinkedIn Developer:**
-   - Acesse [LinkedIn Developer](https://www.linkedin.com/developers/apps)
-   - Crie um novo aplicativo e preencha os detalhes necessários.
-   - Adicione os seguintes produtos ao seu aplicativo:
-     - "Sign In with LinkedIn"
-     - "Marketing Developer Platform"
-   - Copie o `Client ID` e o `Client Secret`.
-   - Defina a URL de redirecionamento para: `http://127.0.0.1:5000/callback`
+   Acesse [LinkedIn Developer](https://www.linkedin.com/developers/apps)
 
-2. **Configurar os escopos necessários:**
-   - Certifique-se de selecionar as seguintes permissões:
-     - `openid profile email`
-     - `r_basicprofile`
-     - `r_organization_admin`
-     - `r_organization_social`
-     - `rw_organization_admin`
-     - `w_organization_social`
-     - `w_member_social`
+   * Adicione os produtos:
 
-3. **Criar e configurar o arquivo `.env`**
+     * "Sign In with LinkedIn"
+     * "Marketing Developer Platform"
+   * Copie seu `Client ID` e `Client Secret`
+   * Defina o redirect URI para:
 
-Crie um arquivo `.env` no diretório raiz com o seguinte conteúdo:
+     ```http
+     http://127.0.0.1:5000/callback
+     ```
 
-```
-LINKEDIN_CLIENT_ID=SEU_CLIENT_ID
-LINKEDIN_CLIENT_SECRET=SEU_CLIENT_SECRET
-LINKEDIN_REDIRECT_URI=http://127.0.0.1:5000/callback
-```
+2. **Permissões necessárias (scopes):**
 
-4. **Criar e ativar um ambiente virtual (venv)**
+   * `openid profile email`
+   * `r_organization_admin`
+   * `r_organization_social`
+   * `rw_organization_admin`
+   * `w_organization_social`
+   * `w_member_social`
+
+3. **Crie o arquivo `.env` com as credenciais:**
+
+   ```env
+   LINKEDIN_CLIENT_ID=SEU_CLIENT_ID
+   LINKEDIN_CLIENT_SECRET=SEU_CLIENT_SECRET
+   LINKEDIN_REDIRECT_URI=http://127.0.0.1:5000/callback
+   ```
+
+---
+
+## Configuração do Ambiente
 
 ```bash
+# 1. Crie o ambiente virtual
 python3 -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate    # Windows
+
+# 2. Ative o ambiente
+source venv/bin/activate   # Linux/macOS
+venv\Scripts\activate      # Windows
+
+# 3. Instale as dependências
+pip install -r requirements.txt
 ```
 
 ---
 
-### Instalação e execução
-
-1. Clone o repositório:
+## Execução
 
 ```bash
-git clone https://github.com/seuusuario/linkedin_token.git
-cd linkedin_token
-```
-
-2. Instale as dependências:
-
-```bash
-pip install -r requirements.txt
-```
-
-3. Execute a aplicação Flask:
-
-```bash
+# Rode o app Flask
 python app.py
 ```
 
-4. Acesse no navegador:
+Acesse no navegador:
 
-```plaintext
+```text
 http://127.0.0.1:5000
 ```
 
 ---
 
-### Estrutura do projeto
+## Estrutura do Projeto
 
-```
+```text
 linkedin_token/
-│-- app.py               # Código principal Flask
-│-- config.py            # Configurações
-│-- templates/
-│   ├── home.html         # Página de autenticação
-│   ├── dashboard.html    # Página de exibição de dados
-│-- .env                  # Variáveis de ambiente
-│-- requirements.txt      # Dependências do projeto
+├── app.py               # Aplicação principal Flask
+├── config.py            # Configurações OAuth e helpers
+├── templates/           # Páginas HTML
+│   ├── home.html        # Página inicial com botão de login
+│   └── dashboard.html   # Exibição dos dados pós-login
+├── .env                 # Variáveis de ambiente (não versionado)
+├── requirements.txt     # Dependências do projeto
 ```
 
 ---
 
-### Licença
+## Personalização
 
-Este projeto é licenciado sob a [MIT License](LICENSE).
+* **Templates**: edite `templates/home.html` e `dashboard.html` para mudar layout.
+* **Escopos**: altere os escopos desejados em `config.py` para testar diferentes permissões.
+
+---
+
+## Licença
+
+Distribuído sob a licença [MIT](LICENSE).
